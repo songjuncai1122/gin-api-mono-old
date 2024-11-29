@@ -1,0 +1,168 @@
+basePath: /
+definitions:
+  admin.createResponse:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  admin.deleteResponse:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  admin.firstResponse:
+    properties:
+      created_at:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      mobile:
+        description: 手机号
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+  admin.listData:
+    properties:
+      created_at:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      mobile:
+        description: 手机号
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+  admin.listResponse:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/admin.listData'
+        type: array
+    type: object
+  code.Failure:
+    properties:
+      code:
+        description: 业务码
+        type: integer
+      message:
+        description: 描述信息
+        type: string
+    type: object
+info:
+  contact: {}
+  title: gin-api-mono 接口文档
+  version: v0.0.1
+paths:
+  /api/admin:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 单个管理员
+      parameters:
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/admin.firstResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 单个管理员
+      tags:
+      - API.admin
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 创建管理员
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: 手机号
+        in: formData
+        name: mobile
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/admin.createResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 创建管理员
+      tags:
+      - API.admin
+  /api/admin/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除管理员
+      parameters:
+      - description: 主键ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/admin.deleteResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 删除管理员
+      tags:
+      - API.admin
+  /api/admins:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 管理员列表
+      parameters:
+      - description: 主键ID
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/admin.listResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 管理员列表
+      tags:
+      - API.admin
+swagger: "2.0"
